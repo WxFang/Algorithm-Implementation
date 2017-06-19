@@ -1,3 +1,5 @@
+/*Time Complexity O(n)*/
+/*Straightforward*/
 public class Solution {
     public int maxProfit(int[] prices) {
         if(prices.length==0) return 0;
@@ -10,3 +12,5 @@ public class Solution {
         return profit;
     }
 }
+
+/*Kadane's Algorithm*/
