@@ -1,0 +1,74 @@
+/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+ 
+/*Clean and straightforward*/ 
+public class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        Collections.sort(intervals, new Comparator<Interval>(){
+            public int compare(Interval i1, Interval i2){
+                return i1.end - i2.end;
+            }
+        });
+        for(int i=intervals.size()-1; i>0; i--){
+            Interval i1 = intervals.get(i-1);
+            Interval i2 = intervals.get(i);
+            if(i1.end >= i2.start){
+                i1.start = Math.min(i1.start, i2.start);
+                i1.end = i2.end;
+                intervals.remove(i);
+            }
+        }
+        return intervals;
+    }
+}
+ 
+ 
+/*Fast but messy*/ 
+public class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        
+        if(intervals.size()<=1) return intervals;
+        
+        List<Interval> res = new ArrayList<Interval>();
+        int[] starts = new int[intervals.size()];
+        int[] ends = new int[intervals.size()];
+        for(int i=0; i<intervals.size(); i++){
+            starts[i] = intervals.get(i).start;
+            ends[i] = intervals.get(i).end;
+        }
+        Arrays.sort(starts);
+        Arrays.sort(ends);
+        
+        int i=0, flag=0;
+        for(; i<intervals.size(); i++){
+            if(i==0){
+                if(starts[i+1]<=ends[i]) flag=i;
+                else res.add(new Interval(starts[i], ends[i]));
+            }
+            
+            else if(i==intervals.size()-1){
+                if(starts[i]>ends[i-1]) res.add(new Interval(starts[i], ends[i]));
+                else res.add(new Interval(starts[flag], ends[i]));
+            }
+            
+            else{
+                if(starts[i+1]>ends[i]){
+                    if(starts[i]<=ends[i-1]) res.add(new Interval(starts[flag], ends[i]));
+                    else res.add(new Interval(starts[i], ends[i]));
+                }
+                else if(starts[i+1]<=ends[i]){
+                    if(starts[i]>ends[i-1]) flag = i;
+                }
+            }
+        }
+        return res;
+    }
+}
+
