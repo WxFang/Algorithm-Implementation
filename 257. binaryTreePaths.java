@@ -8,6 +8,10 @@
  * }
  */
  
+ /*
+ This tree is Binary Search Tree. Much Easier.
+ All nodes in left tree are smaller than root while all nodes in right tree are larger.
+ */
  
 public class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
