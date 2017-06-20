@@ -1,0 +1,72 @@
+/*Initial Code Using Stack
+Easy to think of
+*/
+public class Solution {
+    public boolean isValid(String s) {
+        if(s.length()==0) return false;
+        
+        Stack<Character> st = new Stack<Character>();
+        for(int i=0; i<s.length(); i++){
+            if(st.isEmpty()==true) st.push(s.charAt(i));
+            else if((st.peek()=='{'&&s.charAt(i)=='}') || (st.peek()=='['&&s.charAt(i)==']') || (st.peek()=='('&&s.charAt(i)==')')) 
+                st.pop();
+            else st.push(s.charAt(i));
+        }
+        if(st.isEmpty()==true) return true;
+        else return false;
+    }
+}
+
+/*Super fast
+Implement a simple stack using a char array and check that, 
+for each closing bracket, there is its counterpart in the top of the stack
+*/
+public class Solution {
+	public boolean isValid(String s) {
+		char[] stack = new char[s.length()];
+		int head = 0;
+		for(char c : s.toCharArray()) {
+			switch(c) {
+				case '{':
+				case '[':
+				case '(':
+					stack[head++] = c;
+					break;
+				case '}':
+					if(head == 0 || stack[--head] != '{') return false;
+					break;
+				case ')':
+					if(head == 0 || stack[--head] != '(') return false;
+					break;
+				case ']':
+					if(head == 0 || stack[--head] != '[') return false;
+					break;
+			}
+		}
+		return head == 0;
+
+	}
+}
+
+/*Fast, clean and delicate
+*/
+public class Solution {
+    public boolean isValid(String s) {
+        if(s.length()==0) return false;
+        
+        Stack<Character> st = new Stack<Character>();
+        for(int i=0; i<s.length(); i++){
+            if(s.charAt(i)=='{')
+                st.push('}');
+            else if(s.charAt(i)=='(')
+                st.push(')');
+            else if(s.charAt(i)=='[')
+                st.push(']');
+            else{
+                if(st.isEmpty()==true||st.pop()!=s.charAt(i)) return false;
+            }
+        }
+        return st.isEmpty();
+    }
+}
+
