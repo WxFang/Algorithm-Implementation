@@ -1,0 +1,35 @@
+/*Almost brute force*/
+public class Solution {
+    public int strStr(String haystack, String needle) {
+        int len1 = haystack.length(), len2 = needle.length();
+        int[] index = new int[len1];
+        int p1 = 0, p2 = 0, count = 0; 
+        
+        if(len1 < len2) return -1;
+        if(len2==0) return 0;
+
+        for(p1=0; p1<len1-len2+1; p1++){
+            if(haystack.charAt(p1)==needle.charAt(0) && haystack.charAt(p1+len2-1)==needle.charAt(len2-1)) index[count++] = p1;
+        } //preparation
+        
+        for(p1=0; p1<count; p1++){
+            for(p2=0; p2<len2; p2++){
+                if(haystack.charAt(index[p1]+p2)!=needle.charAt(p2)) break;
+            }
+            if(p2==len2) return index[p1];
+        }
+        return -1;
+    }
+}
+
+/*More concise and clean*/
+public class Solution {
+    public int strStr(String s, String t) {
+        if (t.isEmpty()) return 0; // edge case: "",""=>0  "a",""=>0
+        for (int i = 0; i <= s.length() - t.length(); i++) {
+            for (int j = 0; j < t.length() && s.charAt(i + j) == t.charAt(j); j++)
+                if (j == t.length() - 1) return i;
+        }
+        return -1;
+    }
+}
