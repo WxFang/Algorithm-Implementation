@@ -1,0 +1,63 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ 
+/*Straight but super slow
+Basically a height counting problem
+*/
+public class Solution {
+    public int diameterOfBinaryTree(TreeNode root) {
+        if(root==null) return 0;
+        int count = 0;
+        while(root!=null){
+            count = Math.max(count, depth(root.left)+depth(root.right));
+            root = depth(root.left)>depth(root.right)? root.left:root.right;
+        }
+        return count;
+    }
+    
+    private int depth(TreeNode root){
+        if(root==null) return 0;
+        return Math.max(depth(root.left)+1, depth(root.right)+1);
+    }
+}
+
+/*save max count for each node throught DFS traverse of tree
+But using extra space
+*/
+public class Solution {
+    int count=0;
+    public int diameterOfBinaryTree(TreeNode root) {
+        if(root==null) return 0;
+        maxDepth(root);
+        return count;
+    }
+    private int maxDepth(TreeNode root){
+        if(root==null) return 0;
+        count = Math.max(maxDepth(root.left)+maxDepth(root.right), count);
+        return Math.max(maxDepth(root.left)+1, maxDepth(root.right)+1);
+    }
+}
+
+/*Without member variables*/
+public int DiameterOfBinaryTree(TreeNode root) {
+	return DFS(root)[0];
+}
+
+// int[2] = [best, height]
+private int[] DFS(TreeNode node)
+{
+	if (node == null) return new int[] { 0, 0 };
+	int[] left = DFS(node.left);
+	int[] right = DFS(node.right);
+	
+	int best = Math.Max(left[1] + right[1], Math.Max(left[0], right[0]));
+	int height = 1 + Math.Max(left[1], right[1]);
+	return new int[] { best, height };
+}
