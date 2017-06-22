@@ -1,0 +1,47 @@
+/*Brute force*/
+public class Solution {
+    public int[][] multiply(int[][] A, int[][] B) {
+        int m=A.length, n=A[0].length, nB=B[0].length;
+        int[][] C = new int[m][nB];
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(A[i][j]!=0){
+                    for(int k=0; k<nB; k++){
+                        if(B[j][k]!=0)
+                            C[i][k]+=A[i][j]*B[j][k];
+                    }
+                }
+            }
+        }
+        return C;
+    }
+}
+
+/*Build up new data structure to restore information of nonzero number*/
+public class Solution {
+    class Node{
+        int x,y;
+        Node(int x, int y){
+            this.x = x;
+            this.y = y;
+        }
+    }
+    public int[][] multiply(int[][] A, int[][] B) {
+        ArrayList<Node> listA = new ArrayList<>();
+        ArrayList<Node> listB = new ArrayList<>();
+        int[][] C = new int[A.length][B[0].length];
+        for(int i=0; i<A.length; i++)
+            for(int j=0; j<A[0].length; j++)
+                if(A[i][j]!=0)
+                    listA.add(new Node(i, j));
+        for(int i=0; i<B.length; i++)
+            for(int j=0; j<B[0].length; j++)
+                if(B[i][j]!=0)
+                    listB.add(new Node(i, j));
+        for(Node nodeA: listA)
+            for(Node nodeB: listB)
+                if(nodeA.y==nodeB.x)
+                    C[nodeA.x][nodeB.y] += A[nodeA.x][nodeA.y]*B[nodeB.x][nodeB.y];
+        return C;
+    }
+}
