@@ -1,0 +1,57 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ 
+/*BFS is not recursive algorithm(opposed to DFS) 
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if(root==null) return res;
+        int[] range = new int[]{0, 0};
+        columnRange(root, 0, range);
+        for(int i=range[0]; i<=range[1]; i++)
+            res.add(new ArrayList<Integer>());
+        Queue<TreeNode> q = new LinkedList<>();
+        Queue<Integer> index = new LinkedList<>();
+        q.add(root);
+        index.add(-range[0]);
+        while(!q.isEmpty()){
+            TreeNode node = q.poll();
+            int idx = index.poll();
+            res.get(idx).add(node.val);
+            if(node.left!=null){
+                q.add(node.left);
+                index.add(idx-1);
+            }
+            if(node.right!=null){
+                q.add(node.right);
+                index.add(idx+1);
+            }
+        }
+        return res;
+    }
+    
+    private void columnRange(TreeNode root, int index, int[] range){
+        if(root==null) return;
+        if(root.left!=null) range[0] = Math.min(range[0], index-1);
+        if(root.right!=null) range[1] = Math.max(range[1], index+1);
+        columnRange(root.left, index-1, range);
+        columnRange(root.right, index+1, range);
+    }
+}
