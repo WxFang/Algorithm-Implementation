@@ -1,0 +1,38 @@
+/*Recursive way*/
+public class Solution {
+    private  String[] mapping = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    public List<String> letterCombinations(String digits) {
+        List<String> res = new LinkedList<String>();
+        if(digits.length()==0) return res;
+        helper(0, "", digits, res);
+        return res;
+    }
+    private void helper(int count, String prefix, String digits, List<String> res){
+        if(count==digits.length()){
+            res.add(prefix);
+            return;
+        }
+        String letters = mapping[digits.charAt(count)-'0'];
+        for(int i=0; i<letters.length(); i++)
+            helper(count+1, prefix+letters.charAt(i), digits, res);
+    }
+}
+
+/Using FIFO queue/
+public class Solution {
+    public List<String> letterCombinations(String digits) {
+        String[] mapping = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        LinkedList<String> res = new LinkedList<String>();
+        if(digits.length()==0) return res;
+        res.add("");
+        for(int i=0; i<digits.length(); i++){
+            int x = digits.charAt(i)-'0';
+            while(res.peek().length()==i){
+                String tmp = res.remove();
+                for(char s: mapping[x].toCharArray())
+                    res.add(tmp+s);
+            }
+        }
+        return res;
+    }
+}
