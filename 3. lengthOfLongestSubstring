@@ -1,0 +1,45 @@
+/*stupid solution*/
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s.length()==0) return 0;
+        int len = 1;
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        for(int start=0; start<s.length(); start++){
+            map.clear();
+            for(int end=start; end<s.length(); end++){
+                if(map.containsKey(s.charAt(end))){
+                    len = Math.max(len, end-start);
+                    map.clear();
+                    break;
+                }
+                else{
+                    map.put(s.charAt(end), 1);
+                    if(end==s.length()-1) len = Math.max(len, end-start+1);
+                }
+            }
+        }
+        return len;
+    }
+}
+
+/* Time O(n) */
+/*
+Point is:
+1. update each character position in HashMap
+2. take care that in HashMap, new key value will cover the old one
+*/
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+            if (s.length()==0) return 0;
+            HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+            int max=0;
+            for (int i=0, j=0; i<s.length(); ++i){
+                if (map.containsKey(s.charAt(i))){
+                    j = Math.max(j,map.get(s.charAt(i))+1);
+                }
+                map.put(s.charAt(i),i);
+                max = Math.max(max,i-j+1);
+            }
+            return max;
+        }
+}
