@@ -1,0 +1,47 @@
+/*Straightforward*/
+public class Solution {
+    public String convert(String s, int numRows) {
+        if(s.length() == 0 || numRows <= 1) return s;
+        int length = s.length();
+        int flag = 0;
+        List<List<Character>> res = new ArrayList<List<Character>>();
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < numRows; i++)
+            res.add(new ArrayList<Character>());
+        for(int i = 0; i < length; i++){
+            int row = i % (2 * numRows - 2);
+            if(row > numRows-1) row = numRows - 1 - ++flag;
+            else flag = 0;
+            res.get(row).add(s.charAt(i));
+        }
+        for(List<Character> list : res){
+            for(Character c : list){
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+}
+
+/*Smart way*/
+public class Solution {
+    public String convert(String s, int numRows) {
+        if (s==null || s.length()==0 || s.length()<=numRows || numRows==1) return s;
+        
+        int length = s.length();
+        int jump = 2*numRows-2；
+        char[] c = new char[length];
+        int pos = 0;
+        
+        for(int i = 0; i < numRows; i++){
+            for(int j = i; j < numRows; j = j + jump){
+                c[pos++] = s.charAt(j);
+                if(i > 0 && i < numRows-1 && j + jump - 2*i < length){
+                    c[pos++] = s.charAt(j + jump - 2*i);
+                }
+            }
+        }
+        
+        return new String(c);
+    }
+}
