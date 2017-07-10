@@ -1,0 +1,36 @@
+public class Solution {
+    public boolean isPalindrome(int x) {
+        if(x >= Integer.MAX_VALUE || x < 0) return false;
+        int length = 0, _x = x;
+        
+        // find length of integer
+        while(_x != 0){
+            _x = _x / 10;
+            length++;
+        }
+        
+        // check if palindrome
+        int _length = length;
+        for(int i = 0; i < (int)_length/2; i++){
+            if(x % 10 != (int)(x / (int)Math.pow(10, length-1-i))) return false;
+            x %= (int)Math.pow(10, length-1-i);
+            x /= 10;
+            length --;
+        }
+        return true;
+    }
+}
+
+/* smart way */
+public class Solution {
+    public boolean isPalindrome(int x) {
+        if(x < 0 || (x != 0 && x % 10 == 0)) return false;
+        int rev = 0;
+        while(x > rev){
+            rev = rev * 10 + x % 10;
+            x /= 10;
+        }
+        if(rev == x || rev / 10 == x) return true;
+        else return false;
+    }
+}
