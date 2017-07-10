@@ -1,0 +1,27 @@
+public class Solution {
+    public int myAtoi(String str) {
+        if(str.length()==0) return 0;
+        int sign = 1, res = 0;
+        
+        // remove space
+        int idx = 0;
+        while(str.charAt(idx)==' ' && idx<str.length())
+            idx++;
+        
+        // Handle signs
+        if(str.charAt(idx)=='+' || str.charAt(idx)=='-'){
+            sign = str.charAt(idx)=='+' ? 1 : -1;
+            idx++;
+        }
+        
+        // convert number and avoid overflow
+        while(idx<str.length()){
+            int digit = str.charAt(idx) - '0';
+            if(digit<0 || digit>9) break;
+            if(res>(Integer.MAX_VALUE-digit)/10) return sign==1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;  
+            res = res*10 + digit;
+            idx++;
+        }
+        return res * sign;
+    }
+}
