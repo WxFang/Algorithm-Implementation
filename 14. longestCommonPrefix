@@ -1,0 +1,40 @@
+public class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length == 0) return "";
+        int flag = 0;
+        String s = "";
+        for(int idx = 0; ; idx++){
+            char c = 0;
+            int i = 0;
+            for(; i < strs.length && idx <= strs[i].length()-1; i++){
+                if(i == 0)
+                    c = strs[0].charAt(idx);
+                else{
+                    if(i != 0 && strs[i].charAt(idx) != c){
+                        flag = 1;
+                        break;
+                    }
+                }
+            }
+            if(i != strs.length || flag == 1)
+                break;
+            s += strs[0].charAt(idx);
+        }
+        return s;
+    }
+}
+
+/* still not sure how it works */
+    public String longestCommonPrefix(String[] strs) {
+        if(strs == null || strs.length == 0)    return "";
+        String pre = strs[0];
+        int i = 1;
+        while(i < strs.length){
+            while(strs[i].indexOf(pre) != 0){
+                pre = pre.substring(0,pre.length()-1);
+                System.out.println(pre);
+            }
+            i++;
+        }
+        return pre;
+    }
