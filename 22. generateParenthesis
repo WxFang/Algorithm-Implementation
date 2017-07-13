@@ -1,0 +1,18 @@
+public class Solution {
+    private List<String> list = new ArrayList<String>();
+    public List<String> generateParenthesis(int n) {
+        helper("", 0, 0, n);
+        return list;
+    }
+    private void helper(String s, int left, int right, int max){
+        System.out.println(s);
+        if(left + right == 2 * max){
+            list.add(s);
+            return;
+        }
+        if(right < left)
+            helper(s + ')', left, right + 1, max);
+        if(left < max)
+            helper(s + '(', left + 1, right, max);
+    }
+}
