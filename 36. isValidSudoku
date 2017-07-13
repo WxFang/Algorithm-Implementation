@@ -1,0 +1,30 @@
+public class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        HashMap<Character, Integer> mapRow = new HashMap<Character, Integer>();
+        HashMap<Character, Integer> mapCol = new HashMap<Character, Integer>();
+        HashMap<Character, Integer> mapCube = new HashMap<Character, Integer>();     
+        for(int i = 0; i < board.length; i++){
+            mapRow.clear();
+            mapCol.clear();
+            mapCube.clear();
+            for(int j = 0; j < board.length; j++){
+                char cRow = board[i][j];
+                char cCol = board[j][i];
+                char cCube = board[(int)(i / 3) * 3 + j / 3][(i % 3) * 3 + j % 3];
+                if(cRow != '.'){
+                    if(mapRow.containsKey(cRow)) return false;
+                    else mapRow.put(cRow, 1);
+                }
+                if(cCol != '.'){
+                    if(mapCol.containsKey(cCol)) return false;
+                    else mapCol.put(cCol, 1);
+                }
+                if(cCube != '.'){
+                    if(mapCube.containsKey(cCube)) return false;
+                    else mapCube.put(cCube, 1);
+                }
+            }
+        }
+        return true;
+    }
+}
