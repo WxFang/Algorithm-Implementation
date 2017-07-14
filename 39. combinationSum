@@ -1,0 +1,29 @@
+public class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+            Arrays.sort(candidates);
+            List<List<Integer>> res=new ArrayList();
+            //combine(res, new ArrayList<Integer>(),candidates,target,0);
+            combine(0, candidates, target, res, new ArrayList<Integer>());
+            return res;
+    }
+
+
+    private void combine(int pos, int[] candidates, int target, List<List<Integer>> res, ArrayList<Integer> list){
+        if(pos >= candidates.length || target < 0){
+            return;
+        }
+
+        if(target == 0){
+            res.add(new ArrayList<>(list));
+            return;
+        }
+
+        if(target >= candidates[pos]){
+            list.add(candidates[pos]);
+            combine(pos, candidates, target-candidates[pos], res, list);
+            list.remove(list.size()-1);
+        }
+        combine(pos+1, candidates, target, res, list);
+
+    }
+}
