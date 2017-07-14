@@ -15,6 +15,10 @@ public class Solution {
 			// lets the duplicate values be picked up in the ascending order of index;
 			// It avoids that value with larger index permute ahead of the same value 
 			// with smaller index.
+			// If there are two same consecutive numbers, then there are two ways to get same result
+			// We need to figure out what the order of visiting is.
+			// If !used[i-1], then we visit i-1 first then i-1
+			// If used[i-1], then we visit i first then i
 			if(i > 0 && nums[i] == nums[i-1] && used[i - 1]) continue;
 			used[i] = true;
 			list.add(nums[i]);
