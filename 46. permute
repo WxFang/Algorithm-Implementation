@@ -3,21 +3,46 @@ public class Solution {
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res = new ArrayList<List<Integer>>();
         if(nums.length == 0) return res;
-        backtrack(res, new ArrayList<Integer>(), nums, 0, nums.length);
+        backtrack(res, new ArrayList<Integer>(), nums, 0);
         return res;
     }
-    private void backtrack(List<List<Integer>> res, ArrayList<Integer> list, int[] nums, int pos, int max){
-        if(pos >= max || list.size() > max)
+    private void backtrack(List<List<Integer>> res, ArrayList<Integer> list, int[] nums, int pos){
+        if(pos >= nums.length || list.size() > nums.length)
             return;
-        if(list.size() == max){
+        if(list.size() == nums.length){
             res.add(new ArrayList<Integer>(list));
             return;
         } 
-        if(list.size() < max){
-            for(int i = 0; i < max; i++){
-                if(!list.contains(nums[(pos + i) % max])){
-                    list.add(nums[(pos + i) % max]);
-                    backtrack(res, list, nums, (pos + i) % max, max);
+        if(list.size() < nums.length){
+            for(int i = 0; i < nums.length; i++){
+                if(!list.contains(nums[(pos + i) % (nums.length)])){
+                    list.add(nums[(pos + i) % (nums.length)]);
+                    backtrack(res, list, nums, (pos + i) % (nums.length));
+                    list.remove(list.size() - 1); 
+                }
+            }
+        }
+    }
+}
+
+/* simple */
+public class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(nums.length == 0) return res;
+        backtrack(res, new ArrayList<Integer>(), nums);
+        return res;
+    }
+    private void backtrack(List<List<Integer>> res, ArrayList<Integer> list, int[] nums){
+        if(list.size() == nums.length){
+            res.add(new ArrayList<Integer>(list));
+            return;
+        } 
+        if(list.size() < nums.length){
+            for(int i = 0; i < nums.length; i++){
+                if(!list.contains(nums[i])){
+                    list.add(nums[i]);
+                    backtrack(res, list, nums);
                     list.remove(list.size() - 1); 
                 }
             }
