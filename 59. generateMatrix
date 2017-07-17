@@ -1,0 +1,33 @@
+public class Solution {
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        if(n <= 0) return matrix;
+        int i = 0, j = 0, cnt = 0, offsetRow = 0, offsetCol = 0;
+        while(cnt < n * n){
+            matrix[i][j] = cnt + 1;
+            cnt++;
+            if(i == offsetRow){
+                if(j < n - 1 - offsetCol) j++;
+                else i++;
+            } 
+            else if(i == n - 1 - offsetRow){
+                if(j > offsetCol) j--;
+                else i--;
+            }
+            else if(j == n - 1 - offsetCol){
+                if(i < n - 1 - offsetRow) i++;
+                else j--;
+            }
+            else if(j == offsetCol){
+                if(i > offsetRow + 1) i--;
+                else{
+                    j++;
+                    offsetCol++;
+                    offsetRow++;
+                }
+            }
+            else{}
+        }
+        return matrix;
+    }
+}
