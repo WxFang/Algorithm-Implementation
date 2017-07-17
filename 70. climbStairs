@@ -1,0 +1,16 @@
+/* basically fibonacci */
+public class Solution {
+    public int climbStairs(int n) {
+        if(n <= 0) return 0;
+        if(n == 1) return 1;
+        if(n == 2) return 2;
+        int n1 = 3, n2 = 2;
+        int res = 3;
+        for(int count = 3; count < n; count++){
+            res += n2;
+            n2 = n1;
+            n1 = res;
+        }
+        return res;
+    }
+}
