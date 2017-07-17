@@ -1,0 +1,16 @@
+/* kadane's algorithm*/
+/* https://www.youtube.com/watch?v=epTQfFlhQBo */
+public class Solution {
+    public int maxSubArray(int[] nums) {
+        if(nums.length == 0) return 0;
+        int max_cur = nums[0], max = nums[0];
+        for(int i = 1; i < nums.length; i++){
+            if(max_cur < 0)
+                max_cur = nums[i];
+            else
+                max_cur += nums[i];
+            max = Math.max(max, max_cur);
+        }
+        return max;
+    }
+}
