@@ -1,0 +1,59 @@
+/* use row 0 and col 0 as marker
+ * O(1) space
+ */
+ public class Solution {
+    public void setZeroes(int[][] matrix) {
+        if(matrix.length == 0 || matrix[0].length == 0) return;
+        int m = matrix.length, n = matrix[0].length;
+        boolean fr = false, fc = false; // marker for first line and first row
+        for(int i = 0; i < m; i++){
+            for(int j = 0; j < n; j++){
+                if(matrix[i][j] == 0){
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                    if(i == 0) fr = true;
+                    if(j == 0) fc = true;
+                }
+            }
+        }
+        for(int i = 1; i < m; i++){
+            for(int j = 1; j < n; j++){
+                if(matrix[0][j] == 0 || matrix[i][0] == 0)
+                    matrix[i][j] = 0;
+            }
+        }
+        if(fr == true){
+            for(int j = 0; j < n; j++)
+                matrix[0][j] = 0;
+        }
+        if(fc == true){
+            for(int i = 0; i < m; i++)
+                matrix[i][0] = 0;
+        }
+    }
+}
+
+
+/* straightforward 
+ * O(m + n) space
+ */
+public class Solution {
+    public void setZeroes(int[][] matrix) {
+        List<Integer> row = new ArrayList<Integer>();
+        List<Integer> col = new ArrayList<Integer>();
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[0].length; j++){
+                if(matrix[i][j] == 0){
+                    row.add(i);
+                    col.add(j);
+                }
+            }
+        }
+        for(int r : row)
+            for(int j = 0; j < matrix[0].length; j++)
+                matrix[r][j] = 0;
+        for(int c : col)
+            for(int i = 0; i < matrix.length; i++)
+                matrix[i][c] = 0;
+    }
+}
