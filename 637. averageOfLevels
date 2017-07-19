@@ -1,0 +1,62 @@
+/* Tree BFS 
+ * get size as number of treenodes for this level
+ * after this level is over then go to next level 
+*/
+public class Solution {
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> res = new ArrayList<Double>();
+        if(root == null) return res;
+        Queue<TreeNode> q = new ArrayDeque<TreeNode>();
+        q.add(root);
+        
+        while(!q.isEmpty()){
+            int n = q.size(); // number of treenodes on this level
+            double sum = 0;
+            for(int i = 0; i < n; i++){
+                TreeNode cur = q.poll();
+                sum += (double)cur.val / n;
+                if(cur.left != null) q.add(cur.left);
+                if(cur.right != null) q.add(cur.right);
+            }
+            res.add(sum);
+        }
+        return res;
+    }
+}
+
+
+/* straightforward but slow */
+public class Solution {
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> res = new ArrayList<Double>();
+        if(root == null) return res;
+        Queue<TreeNode> q = new ArrayDeque<TreeNode>();
+        
+        q.add(root);
+        int cnt = 1, next = 0, _cnt = 1;
+        double sum = 0;
+        
+        while(!q.isEmpty()){
+            TreeNode cur = q.peek();
+            if(cur.left != null){
+                q.add(cur.left);
+                next++;
+            }
+            if(cur.right != null){
+                q.add(cur.right);
+                next++;
+            }
+            sum += (double)cur.val / _cnt;
+            q.poll();
+            cnt--;
+            if(cnt == 0){
+                res.add(sum); // this level is over
+                cnt = next; // count down to zero for this level
+                _cnt = cnt; // record number of treenodes for this leve
+                next = 0; // record number of treenodes for next level
+                sum = 0;
+            }
+        }
+        return res;
+    }
+}
