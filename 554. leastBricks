@@ -1,0 +1,17 @@
+public class Solution {
+    public int leastBricks(List<List<Integer>> wall) {
+        HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+        if(wall.size() == 0) return 0;
+        for(List<Integer> l : wall){
+            int temp = 0, len = 0;
+            for(int i = 0; i < l.size() - 1; i++){
+                len = l.get(i) + temp;
+                temp = len;
+                if(map.isEmpty() || !map.containsKey(len)) map.put(len, 1);
+                else map.put(len, map.get(len) + 1);
+            }
+        }
+        int max = map.isEmpty() ? 0 : (Collections.max(map.values()));
+        return wall.size() - max;
+    }
+}
