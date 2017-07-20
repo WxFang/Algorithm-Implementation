@@ -1,0 +1,17 @@
+public class Solution {
+    public int totalHammingDistance(int[] nums) {
+        int res = 0;
+        // cannot equal 32
+        // maximan length for integer is 32 bit
+        for(int k = 0; k < 32; k++){
+            int one = 0;
+            // find number of zero and one for each loop
+            for(int i : nums)
+                one += i >> k & 1;
+            // dont record number of zero
+            // cause there are many more zeros after >>
+            res += one * (nums.length - one);
+        }
+        return res;
+    }
+}
