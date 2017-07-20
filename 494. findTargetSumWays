@@ -1,0 +1,21 @@
+/* dp is faster */
+
+/* recursive and slow */
+public class Solution {
+    private int res = 0;
+    public int findTargetSumWays(int[] nums, int S) {
+        if(nums.length == 0) return 0;
+        helper(nums, S, 0, 0);
+        return res;
+    }
+    private void helper(int[] nums, int S, int pos, int sum){
+        if(pos > nums.length) return;
+        if(pos == nums.length){
+            if(sum == S)
+                res++;
+            return;
+        }
+        helper(nums, S, pos + 1, sum + nums[pos]);
+        helper(nums, S, pos + 1, sum - nums[pos]);
+    }
+}
