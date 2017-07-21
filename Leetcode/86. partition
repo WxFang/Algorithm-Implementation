@@ -1,0 +1,69 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+/* concise, no need to handle null head */
+public class Solution {
+    public ListNode partition(ListNode head, int x) {
+        // build up two heads, no need to handle null
+        ListNode dummy1 = new ListNode(0), dummy2 = new ListNode(0); 
+        ListNode cur1 = dummy1, cur2 = dummy2;
+        
+        while(head != null){
+            if(head.val >= x){
+                cur1.next = head;
+                cur1 = cur1.next;
+            }
+            else{
+                cur2.next = head;
+                cur2 = cur2.next;
+            }
+            head = head.next;
+        }
+        cur2.next = dummy1.next;
+        cur1.next = null; // avoid circle
+        return dummy2.next;
+    }
+}
+ 
+public class Solution {
+    public ListNode partition(ListNode head, int x) {
+        if(head == null || head.next == null) return head;
+        
+        ListNode copy = head; 
+        
+        ListNode newR = null, newL = null;
+        ListNode left = null, right = null;
+        while(copy != null){
+            if(copy.val >= x){
+                if(newR == null){
+                    newR = copy;
+                    right = newR;
+                }
+                else{
+                    newR.next = copy;
+                    newR = newR.next;
+                }
+            }
+            else{
+                if(newL == null){
+                    newL = copy;
+                    left = newL;
+                }
+                else{
+                    newL.next = copy;
+                    newL = newL.next;
+                }
+            }
+            copy = copy.next;
+        }
+        if(left == null || right == null) return head;
+        newR.next = null;
+        newL.next = right;
+        return left;
+    }
+}
