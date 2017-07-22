@@ -1,0 +1,45 @@
+/* only using stack; brilliant idea */
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        if(root == null) return res;
+        Stack<TreeNode> st = new Stack<TreeNode>();
+        TreeNode cur = root;
+        while(!st.isEmpty() || cur != null){
+            while(cur != null){
+                st.push(cur);
+                cur = cur.left;
+            }
+            cur = st.pop();
+            res.add(cur.val);
+            cur = cur.right;
+        }
+        return res;
+    }
+}
+
+/* using hashset and stack; slow */
+public class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        if(root == null) return res;
+        HashSet<TreeNode> set = new HashSet<TreeNode>();
+        Stack<TreeNode> st = new Stack<TreeNode>();
+        st.push(root);
+        while(!st.isEmpty()){
+            TreeNode cur = st.peek();
+            if((cur.left == null && cur.right == null) || set.contains(cur)){
+                st.pop();
+                res.add(cur.val);
+            }
+            else{
+                st.pop();
+                if(cur.right != null) st.push(cur.right);
+                st.push(cur);
+                if(cur.left != null) st.push(cur.left);
+            }
+            set.add(cur);
+        }
+        return res;
+    }
+}
