@@ -1,0 +1,33 @@
+public class Solution {
+    public List<String> generatePossibleNextMoves(String s) {
+        if(s == null || s.isEmpty()) return new ArrayList<>();
+        List<String> result = new ArrayList<>();
+        for(int i=0; i<s.length()-1; i++) {
+            if(s.charAt(i) == '+' && s.charAt(i+1) == '+') {
+                result.add(s.substring(0,i) + "--" + s.substring(i+2));
+            }
+        }
+        return result;
+    }
+}
+
+
+public class Solution {
+    public List<String> generatePossibleNextMoves(String s) {
+        if(s.length() == 0 || s.length() == 1) return(new ArrayList<String>());
+        List<String> res = new ArrayList<String>();
+        char[] chars = s.toCharArray();
+        char pre = chars[0];
+        for(int i = 1; i < s.length(); i++){
+            if(chars[i] == '+' && pre == '+'){
+                chars[i] = '-';
+                chars[i - 1] = '-';
+                res.add(new String(chars));
+                chars[i] = '+';
+                chars[i - 1] = '+';
+            }
+            pre = chars[i];
+        }
+        return res;
+    }
+}
