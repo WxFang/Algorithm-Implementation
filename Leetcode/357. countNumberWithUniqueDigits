@@ -1,0 +1,40 @@
+/* backtrack
+ * for loop for each lendth from 1 to n
+ */
+public class Solution {
+    public int countNumbersWithUniqueDigits(int n) {
+        if(n <= 0) return 1;
+        int res = 1;
+        for(int i = 1; i <= n; i++)
+            res += helper(n, new boolean[10], 1);
+        return res;
+    }
+    private int helper(int n, boolean[] visited, int pos){
+        if(pos > n + 1) return 0;
+        if(pos == n + 1) return 1;
+        int j, res = 0;
+        if(pos == n) j = 1;
+        else j = 0;
+        for(; j <= 9; j++){
+            if(visited[j]) continue;
+            visited[j] = true;
+            res += helper(n, visited, pos + 1);
+            visited[j] = false;
+        }
+        return res;
+    }
+}
+
+/* math */
+public class Solution {
+    public int countNumbersWithUniqueDigits(int n) {
+        if(n <= 0) return 1;
+        int[] cache = new int[n + 1];
+        cache[0] = 1;
+        cache[1] = 10;
+        for(int i = 2; i <= n; i++){
+            cache[i] = cache[i - 1] + (11 - i) * (cache[i - 1] - cache[i - 2]);
+        }
+        return cache[n];
+    }
+}
