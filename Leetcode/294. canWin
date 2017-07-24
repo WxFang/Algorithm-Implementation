@@ -1,0 +1,38 @@
+/* backtrack with memoization */
+public class Solution {
+    public boolean canWin(String s) {
+        if(s.length() < 2) return false;
+        HashSet<String> winSet = new HashSet<String>();
+        return canWin(s, winSet);
+    }
+    private boolean canWin(String s, HashSet<String> winSet){
+        if(winSet.contains(s)) return true;
+        for(int i = 0; i < s.length(); i++){
+            if(s.startsWith("++", i)){
+                String temp = s.substring(0, i) + "--" + s.substring(i + 2);
+                if(!canWin(temp, winSet)){
+                    winSet.add(s);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+public class Solution {
+    public boolean canWin(String s) {
+        // The idea is try to replace every "++" in the current string s to "--" and see if the opponent can win or not, 
+        // if the opponent cannot win, great, we win!
+        if(s.length() < 2) return false;
+        for(int i = 0; i < s.length(); i++){
+            if(s.startsWith("++", i)){
+                String temp = s.substring(0, i) + "--" + s.substring(i + 2);
+                if(!canWin(temp))
+                    return true;
+            }
+            // For first move, only need one possible way to win, it wins
+        }
+        return false;
+    }
+}
