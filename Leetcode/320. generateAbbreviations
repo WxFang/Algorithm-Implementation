@@ -1,0 +1,22 @@
+public class Solution {
+    public List<String> generateAbbreviations(String word) {
+        List<String> list = new ArrayList<String>();
+        helper(word, list, 0, new StringBuilder(), 0);
+        return list;
+    }
+    private void helper(String word, List<String> list, int pos, StringBuilder sb, int num){
+        // save original length
+        // cause in for loop length may maintain the same or + num + 1, it depends.
+        int len = sb.length();
+        if(pos == word.length()){
+            if(num > 0) sb.append(num);
+            list.add(sb.toString());
+        }
+        else{
+            helper(word, list, pos + 1, sb, num + 1);
+            if(num > 0) sb.append(num);
+            helper(word, list, pos + 1, sb.append(word.charAt(pos)), 0);
+        }
+        sb.setLength(len);
+    }
+}
