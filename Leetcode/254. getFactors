@@ -1,0 +1,49 @@
+/* straightforward but slow */
+public class Solution {
+    public List<List<Integer>> getFactors(int n) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(n <= 1) return res;
+        helper(n, n, res, 2, new ArrayList<Integer>());
+        return res;
+    }
+    private void helper(int target, int n, List<List<Integer>> res, int cur, ArrayList<Integer> list){
+        if(n == 1){
+            res.add(new ArrayList<Integer>(list));
+            return;
+        }
+        if(cur > n) return;
+        for(int i = cur; i <= target / cur; i++){
+            if(n % i != 0) continue;
+            list.add(i);
+            helper(target, n / i, res, i, list);
+            list.remove(list.size() - 1);
+        }
+    }
+}
+
+/* The upper bound for the factors of n is (int)sqrt(n), 
+ * and when you find one factor of n, then put the factor and its corresponding factor to a temp list, 
+ * and add the temp list to the result list. 
+ * Then we remove the larger factor from the temp list, 
+ * and recursively do the larger factor from the smaller factor to upper bound for the same procedure.
+*/
+public class Solution {
+    public List<List<Integer>> getFactors(int n) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(n <= 1) return res;
+        helper(n, res, 2, new ArrayList<Integer>());
+        return res;
+    }
+    private void helper(int n, List<List<Integer>> res, int cur, ArrayList<Integer> list){
+        for(int i = cur; i <= Math.sqrt(n); i++){
+            if(n % i != 0) continue;
+            int factor = n / i; // biggest factor n can have
+            list.add(i);
+            list.add(factor);
+            res.add(new ArrayList<Integer>(list));
+            list.remove(list.size() - 1);
+            helper(factor, res, i, list);
+            list.remove(list.size() - 1);
+        }
+    }
+}
