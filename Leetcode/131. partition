@@ -1,0 +1,25 @@
+public class Solution {
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+        helper(res, s, 0, new ArrayList<>());
+        return res;
+    }
+    private void helper(List<List<String>> res, String s, int pos, ArrayList<String> list){
+        if(pos >= s.length()){
+            res.add(new ArrayList<>(list));
+            return;
+        }
+        for(int i = pos; i < s.length(); i++){
+            if(!isPalindrome(s, pos, i)) continue;
+            list.add(s.substring(pos, i + 1));
+            helper(res, s, i + 1, list);
+            list.remove(list.size() - 1);
+        }
+    }
+    private boolean isPalindrome(String s, int lo, int hi){
+        while(lo < hi)
+            if(s.charAt(lo++) != s.charAt(hi--))
+                return false;
+        return true;
+    }
+}
