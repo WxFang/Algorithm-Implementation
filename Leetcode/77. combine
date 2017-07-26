@@ -1,0 +1,18 @@
+public class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        helper(n, k, res, 1, new ArrayList<Integer>());
+        return res;
+    }
+    private void helper(int n, int k, List<List<Integer>> res, int cur, ArrayList<Integer> list){
+        if(k == 0){
+            res.add(new ArrayList<Integer>(list));
+            return;
+        }
+        for(int i = cur; i <= n; i++){
+            list.add(i);
+            helper(n, k - 1, res, i + 1, list);
+            list.remove(list.size() - 1);
+        }
+    }
+}
