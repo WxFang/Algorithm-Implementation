@@ -1,0 +1,27 @@
+public class Solution {
+    private StringBuilder sb = new StringBuilder();
+    public String getPermutation(int n, int k) {
+        helper(n, k, new boolean[n + 1]);
+        return sb.toString();
+    }
+    private void helper(int n, int k, boolean[] visited){
+        if(n < 0) return;
+        int mul = 1, index = 1;
+        for(int i = 1; i <= n - 1; i++)
+            mul *= i;
+        index = k % mul == 0 ? k / mul : k / mul + 1;
+        // last unvisited one(reversed)
+        if(index == 0) index = n; 
+        // index th unvisited one
+        // note that n has been changed, so use visited length here
+        for(int i = 1; i < visited.length; i++){ 
+            if(visited[i]) continue;
+            if(index-- == 1){
+                sb.append(i);
+                visited[i] = true;
+                break;
+            }
+        }
+        helper(n - 1, k % mul, visited);
+    }
+}
