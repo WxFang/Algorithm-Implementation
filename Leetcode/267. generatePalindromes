@@ -1,0 +1,50 @@
+public class Solution {
+    public List<String> generatePalindromes(String s) {
+        List<String> res = new ArrayList<>();
+        List<Character> list = new ArrayList<>();
+        HashMap<Character, Integer> map = new HashMap<>();
+        int odd = 0;
+        String mid = "";
+        
+        // step 1: build map and count odds
+        for(int i = 0; i < s.length(); i++){
+            char c = s.charAt(i);
+            if(!map.containsKey(c)) map.put(c, 1);
+            else map.put(c, map.get(c) + 1);
+            odd += map.get(c) % 2 == 0 ? -1 : 1;
+        }
+        
+        // cannot form palindrome permutation
+        if(odd > 1) return res;
+        
+        // step 2: store mid char and add left side chars to list
+        for (Map.Entry<Character, Integer> entry : map.entrySet()){
+            if(entry.getValue() % 2 != 0)
+                mid += entry.getKey();
+            for(int i = 0; i < entry.getValue() / 2; i++)
+                list.add(entry.getKey());
+        }
+        
+        // step 3: permutation
+        boolean[] visited = new boolean[list.size()];
+        helper(res, list, new StringBuilder(), mid, visited);
+        return res;
+    }
+    private void helper(List<String> res, List<Character> list, StringBuilder sb, String mid, boolean[] visited){
+        if(list.size() == sb.length()){
+            res.add(sb.toString() + mid + sb.reverse().toString());
+            // sb has been reversed once; to restore original sb you need to reverse back
+            sb.reverse();
+            return;
+        }
+        for(int i = 0; i < list.size(); i++){
+            if(i > 0 && !visited[i - 1] && list.get(i - 1) == list.get(i)) continue;
+            if(visited[i]) continue;
+            sb.append(list.get(i));
+            visited[i] = true;
+            helper(res, list, sb, mid, visited);
+            sb.setLength(sb.length() - 1);
+            visited[i] = false;
+        }
+    }
+}
