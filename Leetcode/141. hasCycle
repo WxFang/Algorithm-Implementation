@@ -1,0 +1,21 @@
+/* Use two pointers, walker and runner.
+ * walker moves step by step. runner moves two steps at time.
+ * if the Linked List has a cycle walker and runner will meet at some
+ * point.
+ */
+
+
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if(head == null) return false;
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast.next != null && fast.next.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow) return true;
+        }
+        return false;
+    }
+}
