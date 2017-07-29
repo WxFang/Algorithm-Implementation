@@ -1,0 +1,65 @@
+/* recursive; faster */
+public class Solution {
+    public ListNode plusOne(ListNode head) {
+        if(head == null) return head;
+        if(helper(head) == 0) return head;
+        else{
+            ListNode dummy = new ListNode(1);
+            dummy.next = head;
+            return dummy;
+        }
+    }
+    private int helper(ListNode head){
+        if(head == null) return 1;
+        if(helper(head.next) == 0) return 0;
+        int carry = head.val + 1;
+        head.val = carry % 10;
+        return carry / 10;
+    }
+}
+
+/* recursive */
+public class Solution {
+    public ListNode plusOne(ListNode head) {
+        if(head == null) return head;
+        if(helper(head) == 0) return head;
+        else{
+            ListNode dummy = new ListNode(1);
+            dummy.next = head;
+            return dummy;
+        }
+    }
+    private int helper(ListNode head){
+        int carry;
+        if(head.next == null)
+            carry = head.val + 1;
+        else carry = head.val + helper(head.next);
+        head.val = carry % 10;
+        return carry / 10;
+    }
+}
+
+/* stack */
+public class Solution {
+    public ListNode plusOne(ListNode head) {
+        if(head == null) return head;
+        Stack<Integer> st = new Stack<>();
+        ListNode dummy = head;
+        ListNode dummy2 = null;
+        int carry = 1;
+        while(dummy != null){
+            st.push(dummy.val);
+            dummy = dummy.next;
+        }
+        dummy = head;
+        while(!st.isEmpty() || carry > 0){
+            if(!st.isEmpty()) carry += st.pop();
+            ListNode temp = new ListNode(carry % 10);
+            temp.next = dummy2;
+            dummy.next = temp;
+            dummy2 = temp;
+            carry /= 10;
+        }
+        return dummy.next;
+    }
+}
