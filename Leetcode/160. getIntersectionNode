@@ -1,0 +1,45 @@
+/* smart; two iterations */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null) return null;
+        ListNode a = headA;
+        ListNode b = headB;
+        while(a != b){
+            a = a == null ? headB : a.next;
+            b = b == null ? headA : b.next;
+        }
+        return a;
+    }
+}
+
+
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if(headA == null || headB == null) return null;
+        ListNode copyA = headA;
+        ListNode copyB = headB;
+        int lenA = 0, lenB = 0;
+        while(copyA != null){
+            lenA++;
+            copyA = copyA.next;
+        }
+        while(copyB != null){
+            lenB++;
+            copyB = copyB.next;
+        }
+        if(lenA - lenB >= 0){
+            for(int i = 0; i < lenA - lenB; i++)
+                headA = headA.next;
+        }
+        else{
+            for(int i = 0; i < lenB - lenA; i++)
+                headB = headB.next;
+        }
+        while(headA != null && headB != null){
+            if(headA == headB) return headA;
+            headA = headA.next;
+            headB = headB.next;
+        }
+        return null;
+    }
+}
