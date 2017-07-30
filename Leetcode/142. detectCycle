@@ -1,0 +1,72 @@
+/* notice how math works here */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if (head == null || head.next == null) {
+            return null;
+        }
+        ListNode slow = head;
+        ListNode fast = head;
+        boolean isCycle = false;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                isCycle = true;
+                break;
+            }
+        }
+        if (!isCycle) {
+            return null;
+        }
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+}
+
+
+/* stupid and slow */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head == null) return null;
+        ListNode a = head;
+        ListNode b = head.next;
+        while(b != null && b.next != null && a != b){
+            a = a.next;
+            b = b.next.next;
+        }
+        if(b == null || b.next == null) return null;
+        ListNode temp = a;
+        ListNode res = head;
+        int min = Integer.MAX_VALUE;
+        int len = 0;
+        b = head;
+        while(b != a){
+            b = b.next;
+            len++;
+        }
+        if(len < min){
+            min = Math.min(min, len);
+            res = b;
+        }
+        
+        a = temp.next;
+        while(a != temp){
+            len = 0;
+            b = head;
+            while(b != a){
+                b = b.next;
+                len++;
+            }
+            if(len < min){
+                min = Math.min(min, len);
+                res = b;
+            }
+            a = a.next;
+        }
+        return res;
+    }
+}
