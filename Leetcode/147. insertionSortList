@@ -1,0 +1,66 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        if(head == null|| head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode node = head.next;
+        ListNode pre = head;
+        while(node != null){
+            ListNode cur = dummy;
+            while(cur.next != node && node.val > cur.next.val)
+                cur = cur.next;
+            if(cur.next == node){
+                pre = node;
+                node = node.next;
+            }
+            else{
+                pre.next = node.next;
+                node.next = cur.next;
+                cur.next = node;
+                node = pre.next;
+            }
+        }
+        return dummy.next;
+    }
+}
+
+public class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        if(head == null|| head.next == null) return head;
+        ListNode dummy = new ListNode(0);
+        ListNode node = head.next;
+        ListNode pre = head;
+        dummy.next = head;
+        while(node != null){
+            ListNode pos = node.next;
+            ListNode cur = dummy.next;
+            ListNode prev = dummy;
+            boolean isInserted = false;
+            while(cur != node){
+                if(node.val <= cur.val){
+                    prev.next = node;
+                    node.next = cur;
+                    pre.next = pos;
+                    isInserted = true;
+                    break;
+                }
+                prev= cur;
+                cur = cur.next;
+            }
+            if(isInserted) node = pos;
+            else{
+                pre = node;
+                node = node.next;
+            }
+        }
+        return dummy.next;
+    }
+}
