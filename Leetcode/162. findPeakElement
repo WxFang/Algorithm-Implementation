@@ -1,0 +1,22 @@
+// This problem is similar to Local Minimum. 
+// And according to the given condition, num[i] != num[i+1], 
+// there must exist a O(logN) solution. So we use binary search for this problem.
+
+// If num[i-1] < num[i] > num[i+1], then num[i] is peak
+// If num[i-1] < num[i] < num[i+1], then num[i+1...n-1] must contains a peak
+// If num[i-1] > num[i] > num[i+1], then num[0...i-1] must contains a peak
+// If num[i-1] > num[i] < num[i+1], then both sides have peak
+// (n is num.length)
+
+public class Solution {
+    public int findPeakElement(int[] nums) {
+        int lo = 0, hi = nums.length - 1;
+        while(lo < hi){
+            int mid = (lo + hi) / 2;
+            if(nums[mid] > nums[mid + 1])
+                hi = mid;
+            else lo = mid + 1;
+        }
+        return lo;
+    }
+}
