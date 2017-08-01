@@ -1,0 +1,14 @@
+public class Solution {
+    public List<Integer> getRow(int rowIndex) {
+        int[] res = new int[rowIndex + 1];
+        for(int i = 1; i <= rowIndex + 1; i++){
+            res[i - 1] = 1;
+            for(int j = i - 2; j >= 1; j--)
+                res[j] = res[j] + res[j - 1];
+        }
+        List<Integer> list = new ArrayList<>();
+        for(int n: res)
+            list.add(n);
+        return list;
+    }
+}
