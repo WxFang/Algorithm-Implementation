@@ -1,3 +1,7 @@
+// The key here is to use swapping to keep constant space and also make use of the 
+// length of the array, which means there can be at most n positive integers. 
+// So each time we encounter an valid integer, find its correct position and swap. 
+// Otherwise we continue.
 public class Solution {
     public int firstMissingPositive(int[] nums) {
         for(int i = 0; i < nums.length; i++)
