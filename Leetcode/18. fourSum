@@ -1,0 +1,61 @@
+// basic algo based on 3sum
+public class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        if(nums.length == 0) return res;
+        for(int i = 0; i < nums.length; i++){
+            if(i > 0 && nums[i] == nums[i - 1]) continue;
+            for(int j = i + 1; j < nums.length; j++){
+                if(j > i + 1 && nums[j] == nums[j - 1]) continue;
+                int sum = target - nums[i] - nums[j];
+                int lo = j + 1, hi = nums.length - 1;
+                while(lo < hi){
+                    if(nums[lo] + nums[hi] == sum){
+                        res.add(Arrays.asList(nums[i], nums[j], nums[lo], nums[hi]));
+                        while(lo < hi && nums[hi - 1] == nums[hi]) hi--;
+                        while(lo < hi && nums[lo + 1] == nums[lo]) lo++;
+                        hi--;
+                        lo++;
+                    }
+                    else if(nums[lo] + nums[hi] < sum) lo++;
+                    else hi--;
+                }
+            }
+        }
+        return res;
+    }
+}
+
+// promoted
+public class Solution {
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        if(nums.length < 4) return res;
+        for(int i = 0; i < nums.length - 3; i++){
+            if(nums[i] + nums[i + 1] + nums[i + 2] + nums[i + 3] > target) break;
+            if(nums[i] + nums[nums.length - 1] + nums[nums.length - 2] + nums[nums.length - 3] < target) continue;
+            if(i > 0 && nums[i] == nums[i - 1]) continue;
+            for(int j = i + 1; j < nums.length - 2; j++){
+                if(nums[i] + nums[j] + nums[j + 1] + nums[j + 2] > target) break;
+                if(nums[i] + nums[j] + nums[nums.length - 1] + nums[nums.length - 2] < target) continue;
+                if(j > i + 1 && nums[j] == nums[j - 1]) continue;
+                int sum = target - nums[i] - nums[j];
+                int lo = j + 1, hi = nums.length - 1;
+                while(lo < hi){
+                    if(nums[lo] + nums[hi] == sum){
+                        res.add(Arrays.asList(nums[i], nums[j], nums[lo], nums[hi]));
+                        while(lo < hi && nums[hi - 1] == nums[hi]) hi--;
+                        while(lo < hi && nums[lo + 1] == nums[lo]) lo++;
+                        hi--;
+                        lo++;
+                    }
+                    else if(nums[lo] + nums[hi] < sum) lo++;
+                    else hi--;
+                }
+            }
+        }
+        return res;
+    }
+}
