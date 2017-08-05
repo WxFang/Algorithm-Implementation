@@ -1,0 +1,15 @@
+// O(n)
+public class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        int slow = 0, fast = 0, min = nums.length + 1, sum = 0;
+        while(fast < nums.length){
+            sum += nums[fast];
+            while(sum >= s){
+                min = Math.min(min, fast - slow + 1);
+                sum -= nums[slow++];
+            }
+            fast++;
+        }
+        return min > nums.length ? 0 : min;
+    }
+}
