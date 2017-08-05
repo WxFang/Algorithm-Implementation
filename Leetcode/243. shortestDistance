@@ -1,0 +1,11 @@
+public class Solution {
+    public int shortestDistance(String[] words, String word1, String word2) {
+        int res = Integer.MAX_VALUE, idx1 = -1, idx2 = -1;
+        for(int i = 0; i < words.length; i++){
+            if(word1.equals(words[i])) idx1 = i;
+            if(word2.equals(words[i])) idx2 = i;
+            if(idx1 != -1 && idx2 != -1) res = Math.min(res, Math.abs(idx1 - idx2));
+        }
+        return res;
+    }
+}
