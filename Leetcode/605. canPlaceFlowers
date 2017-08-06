@@ -1,0 +1,30 @@
+public class Solution {
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        int count = 1, result = 0;
+        for(int f: flowerbed){
+            if(f == 0)
+                count++;
+            else{
+                result += (count - 1) / 2;
+                count = 0;
+            }
+        }
+        if(count != 0) result += count / 2;
+        return result >= n;
+    }
+}
+
+public class Solution {
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        int slow = -1, fast = 0, sum = 0;
+        while(fast < flowerbed.length){
+            fast = slow + 1;
+            while(fast < flowerbed.length && flowerbed[fast] == 0) fast++;
+            if(fast == flowerbed.length && slow == -1) sum += (fast - slow) / 2;
+            else if(fast == flowerbed.length || slow == -1) sum += (fast - slow - 1) / 2;
+            else sum += (fast - slow - 2) / 2;
+            slow = fast;
+        }
+        return n <= sum ? true : false;
+    }
+}
