@@ -1,0 +1,58 @@
+// dp without modifying original grid
+public class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int r = obstacleGrid.length, c = obstacleGrid[0].length;
+        if(r == 0 || c == 0) return 0;
+        int[] dp = new int[c];
+        dp[0] = 1;
+        for(int[] row: obstacleGrid){
+            for(int j = 0; j < c; j++){
+                if(row[j] == 1) 
+                    dp[j] = 0;
+                else if(j > 0)
+                    dp[j] += dp[j - 1];
+            }
+        }
+        return dp[c - 1];
+    }
+}
+
+// in-place dp
+public class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int row = obstacleGrid.length, col = obstacleGrid[0].length;
+        if(row == 0 || col == 0) return 0;
+        obstacleGrid[row - 1][col - 1] ^= 1;
+        for(int i = row - 2; i >= 0; i--)
+            obstacleGrid[i][col - 1] = obstacleGrid[i][col - 1] == 1 ? 0 : obstacleGrid[i + 1][col - 1];
+        for(int j = col - 2; j >= 0; j--)
+            obstacleGrid[row- 1][j] = obstacleGrid[row - 1][j] == 1 ? 0 : obstacleGrid[row - 1][j + 1];
+        for(int i = row - 2; i >= 0; i--)
+            for(int j = col - 2; j >= 0; j--)
+                obstacleGrid[i][j] = obstacleGrid[i][j] == 1 ? 0 : obstacleGrid[i + 1][j] + obstacleGrid[i][j + 1];
+        return obstacleGrid[0][0];
+    }
+}
+
+public class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int row = obstacleGrid.length, col = obstacleGrid[0].length;
+        if(row == 0 || col == 0) return 0;
+        for(int i = row - 1; i >= 0; i--){
+            if(obstacleGrid[i][col - 1] == 1) break;
+            obstacleGrid[i][col - 1] = -1;
+        }
+        for(int j = col - 1; j >= 0; j--){
+            if(obstacleGrid[row - 1][j] == 1) break;
+            obstacleGrid[row - 1][j] = -1;
+        }
+        for(int i = row - 2; i >= 0; i--){
+            for(int j = col - 2; j >= 0; j--){
+                if(obstacleGrid[i][j] == 1) continue;
+                if(obstacleGrid[i + 1][j] != 1) obstacleGrid[i][j] += obstacleGrid[i + 1][j];
+                if(obstacleGrid[i][j + 1] != 1) obstacleGrid[i][j] += obstacleGrid[i][j + 1];
+            }
+        }
+        return obstacleGrid[0][0] == 1 ? 0 : -obstacleGrid[0][0];
+    }
+}
