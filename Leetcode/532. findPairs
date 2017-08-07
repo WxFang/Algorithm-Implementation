@@ -1,0 +1,17 @@
+public class Solution {
+    public int findPairs(int[] nums, int k) {
+        Arrays.sort(nums);
+        int slow = 0, fast = 0, count = 0;
+        while(slow < nums.length && fast < nums.length){
+            if(slow == fast || nums[slow] + k > nums[fast]) fast++;
+            else if(nums[slow] + k == nums[fast]){
+                while(slow < nums.length - 1 && nums[slow] == nums[slow + 1]) slow++;
+                slow++;
+                count++;
+            }
+            else
+                slow++;
+        }
+        return count;
+    }
+}
