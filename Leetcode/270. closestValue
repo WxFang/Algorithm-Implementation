@@ -1,0 +1,27 @@
+public class Solution {
+    public int closestValue(TreeNode root, double target) {
+        if(root == null) return 0;
+        int res = root.val;
+        while(root != null){
+            if(Math.abs(root.val - target) < Math.abs(res - target))
+                res = root.val;
+            if(root.val < target)
+                root = root.right;
+            else if(root.val > target)
+                root = root.left;
+            else
+                return (int)target;
+        }
+        return res;
+    }
+}
+
+public class Solution {
+    public int closestValue(TreeNode root, double target) {
+        int res = root.val;
+        TreeNode child = target < root.val ? root.left : root.right;
+        if(child == null) return res;
+        int temp = closestValue(child, target);
+        return Math.abs(temp - target) < Math.abs(res - target) ? temp : res;
+    }
+}
