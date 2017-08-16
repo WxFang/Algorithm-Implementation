@@ -1,0 +1,48 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    private int curVal;
+    private int curCnt = 0;
+    private int maxCnt = 0;
+    private int modeCnt = 0;
+    private int[] modes;
+    
+    public int[] findMode(TreeNode root) {
+        if(root == null) return new int[0];
+        inorder(root);
+        modes = new int[modeCnt];
+        curCnt = 0;
+        modeCnt = 0;
+        inorder(root);
+        return modes;
+    }
+    private void inorder(TreeNode root){
+        if(root == null) return;
+        inorder(root.left);
+        handleValue(root.val);
+        inorder(root.right);
+    }
+    private void handleValue(int val){
+        if(curVal != val){
+            curVal = val;
+            curCnt = 0;
+        }
+        curCnt++;
+        if(curCnt > maxCnt){
+            maxCnt = curCnt;
+            modeCnt = 1;
+        }
+        else if(curCnt == maxCnt){
+            if(modes != null)
+                modes[modeCnt] = curVal;
+            modeCnt++;
+        }
+    }
+}
