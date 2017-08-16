@@ -1,0 +1,107 @@
+// concise version
+public class Solution {
+    public int[] findDiagonalOrder(int[][] matrix) {
+        if(matrix.length == 0 || matrix[0].length == 0) return new int[0];
+        int row = matrix.length, col = matrix[0].length;
+        int[] res = new int[row * col];
+        int r = 0, c = 0;
+        for(int k = 0; k < row * col; k++){
+            res[k] = matrix[r][c];
+            if((r + c) % 2 == 0){
+                if(c == col - 1) r++;
+                else if(r == 0) c++;
+                else{
+                    r--;
+                    c++;
+                }
+            }
+            else{
+                if(r == row - 1)
+                    c++;
+                else if(c == 0)
+                    r++; 
+                else{
+                    r++;
+                    c--;
+                }
+            }
+        }
+        return res;
+    }
+}
+
+public class Solution {
+    public int[] findDiagonalOrder(int[][] matrix) {
+        if(matrix.length == 0 || matrix[0].length == 0) return new int[0];
+        
+        int row = matrix.length, col = matrix[0].length;
+        int[] res = new int[row * col];
+        int r = 0, c = 0, count = 0;
+        while(count < row * col){
+            if((r + c) % 2 == 0){
+                while(r >= 0 && c < col && r < row && c >= 0){
+                    res[count++] = matrix[r][c];
+                    if(c == col - 1){
+                        r++;
+                        break;
+                    }
+                    else if(r == 0){
+                        c++;
+                        break;
+                    }
+                    else{
+                        r--;
+                        c++;
+                    }
+                }
+            }
+            else{
+                while(r < row && c >= 0 && r >= 0 && c < col){
+                    res[count++] = matrix[r][c];
+                    if(r == row - 1){
+                        c++;
+                        break;
+                    }
+                    else if(c == 0){
+                        r++;
+                        break;
+                    }
+                    else{
+                        r++;
+                        c--;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+}
+
+// stupid and slow
+public class Solution {
+    public int[] findDiagonalOrder(int[][] matrix) {
+        if(matrix.length == 0 || matrix[0].length == 0) return new int[0];
+        int row = matrix.length, col = matrix[0].length;
+        int[] res = new int[row * col];
+        res[0] = matrix[0][0];
+        int i = 0, j = 1, count = 1;
+        while(count <= row * col - 1){
+            for(int k = 1; k <= row; k++){
+                if(i < row && i >= 0 && j < col && j >= 0)
+                    res[count++] = matrix[i][j];
+                i++;
+                j--;
+            }
+            j = j + 2;
+            i = row - 1;
+            for(int k = 1; k <= row; k++){
+                if(i < row && i >= 0 && j < col && j >= 0)
+                    res[count++] = matrix[i][j];
+                i--;
+                j++;
+            }
+            i = 0;
+        }
+        return res;
+    }
+}
