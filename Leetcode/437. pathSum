@@ -1,0 +1,30 @@
+// hashmap; backtracking
+public class Solution {
+    public int pathSum(TreeNode root, int sum) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
+        return helper(root, sum, map, 0);
+    }
+    private int helper(TreeNode root, int sum, HashMap<Integer, Integer> map, int curSum){
+        if(root == null) return 0;
+        curSum += root.val;
+        int res = map.getOrDefault(curSum - sum, 0);
+        map.put(curSum, map.getOrDefault(curSum, 0) + 1);
+        res += helper(root.left, sum, map, curSum) + helper(root.right, sum, map, curSum);
+        map.put(curSum, map.get(curSum) - 1);
+        return res;
+    }
+}
+
+// recursion
+public class Solution {
+    public int pathSum(TreeNode root, int sum) {
+        if(root == null) return 0;
+        return pathSum(root.left, sum) + pathSum(root.right, sum) + pathFrom(root, sum);
+    } 
+    private int pathFrom(TreeNode root, int sum){
+        if(root == null) return 0;
+        sum -= root.val;
+        return (sum == 0 ? 1 : 0) + pathFrom(root.left, sum) + pathFrom(root.right, sum);
+    }
+}
