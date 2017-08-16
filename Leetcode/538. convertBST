@@ -1,0 +1,26 @@
+public class Solution {
+    private int right = 0;
+    public TreeNode convertBST(TreeNode root) {
+        traverse(root);
+        return root;
+    }
+    private void traverse(TreeNode root){
+        if(root == null) return;
+        traverse(root.right);
+        root.val += right;
+        right = root.val;
+        traverse(root.left);
+    }
+}
+
+public class Solution {
+    private int right = 0;
+    public TreeNode convertBST(TreeNode root) {
+        if(root == null) return null;
+        convertBST(root.right);
+        root.val += right;
+        right = root.val;
+        convertBST(root.left);
+        return root;
+    }
+}
