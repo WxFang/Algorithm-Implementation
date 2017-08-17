@@ -1,0 +1,32 @@
+// one step further
+// Redefine rob(root) as a new function which will return an array of two elements, 
+// the first element of which denotes the maximum amount of money that can be robbed 
+// if root is not robbed, while the second element signifies the maximum amount of 
+// money robbed if it is robbed.
+public class Solution {
+    public int rob(TreeNode root) {
+        if(root == null) return 0;
+        int[] res = helper(root);
+        return Math.max(res[0], res[1]);
+    }
+    private int[] helper(TreeNode root){
+        if(root == null) return new int[2];
+        int[] res = new int[2];
+        int[] left = helper(root.left);
+        int[] right = helper(root.right);
+        res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        res[1] = root.val + left[0] + right[0];
+        return res;
+    }
+}
+
+// straightforward
+public class Solution {
+    public int rob(TreeNode root) {
+        if(root == null) return 0;
+        int val1 = root.val;
+        if(root.left != null) val1 += rob(root.left.left) + rob(root.left.right);
+        if(root.right != null) val1 += rob(root.right.left) + rob(root.right.right);
+        return Math.max(val1, rob(root.left) + rob(root.right));
+    }
+}
