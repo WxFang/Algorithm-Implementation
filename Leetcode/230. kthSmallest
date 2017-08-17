@@ -1,0 +1,60 @@
+// binary search
+public class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        if(root == null) return -1;
+        int left = countNodes(root.left);
+        if(left == k - 1)
+            return root.val;
+        else if(left < k - 1)
+            return kthSmallest(root.right, k - 1- left);
+        else 
+            return kthSmallest(root.left, k);
+    }
+    private int countNodes(TreeNode root){
+        if(root == null) return 0;
+        return 1 + countNodes(root.left) + countNodes(root.right);
+    }
+}
+
+// dfs inorder recursive
+public class Solution {
+    private int num = 0;
+    private int count;
+    public int kthSmallest(TreeNode root, int k) {
+        if(root == null) return -1;
+        count = k;
+        helper(root);
+        return num;
+    }
+    private void helper(TreeNode root){
+        if(root.left != null)
+            helper(root.left);
+        count--;
+        if(count == 0)
+            num = root.val;
+        if(root.right != null)
+            helper(root.right);
+    }
+}
+
+// dfs inorder iterative
+public class Solution {
+    public int kthSmallest(TreeNode root, int k) {
+        Stack<TreeNode> st = new Stack();
+        while(root != null){
+            st.push(root);
+            root = root.left;
+        }
+        while(k > 0){
+            root = st.pop();
+            k--;
+            if(k == 0) return root.val;
+            root = root.right;
+            while(root != null){
+                st.push(root);
+                root = root.left;
+            }
+        }
+        return -1;
+    }
+}
