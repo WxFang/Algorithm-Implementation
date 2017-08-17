@@ -1,0 +1,19 @@
+public class Solution {
+    private int count = 0;
+    public int countUnivalSubtrees(TreeNode root) {
+        if(root == null) return 0;
+        helper(root);
+        return count;
+    }
+    private boolean helper(TreeNode root){
+        boolean res = true;
+        if(root.left != null)
+            if(helper(root.left) == false || root.val != root.left.val)
+                res = false;
+        if(root.right != null)
+            if(helper(root.right) == false || root.val != root.right.val)
+                res = false;
+        if(res == true) count++;
+        return res;
+    }
+}
