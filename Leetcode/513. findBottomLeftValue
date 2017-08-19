@@ -1,0 +1,32 @@
+// recursive; right to left dfs
+class Solution {
+    private int maxLevel = 0;
+    private int max = 0;
+    public int findBottomLeftValue(TreeNode root) {
+        helper(root, 0);
+        return max;
+    }
+    private void helper(TreeNode root, int level){
+        if(root == null) return;
+        if(level >= maxLevel){
+            max = root.val;
+            maxLevel = level;
+        }
+        helper(root.right, level + 1);
+        helper(root.left, level + 1);
+    }
+}
+
+// queue; right to left bfs
+class Solution {
+    public int findBottomLeftValue(TreeNode root) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.add(root);
+        while(!q.isEmpty()){
+            root = q.poll();
+            if(root.right != null) q.add(root.right);
+            if(root.left != null) q.add(root.left);
+        }
+        return root.val;
+    }
+}
