@@ -1,0 +1,23 @@
+class Solution {
+    public TreeNode addOneRow(TreeNode root, int v, int d) {
+        if(root == null) return root;
+        if(d > 2){
+            root.left = addOneRow(root.left, v, d - 1);
+            root.right = addOneRow(root.right, v, d - 1);
+        }
+        else if(d == 1){
+            TreeNode newHead = new TreeNode(v);
+            newHead.left = root;
+            root = newHead;
+        }
+        else if(d == 2){
+            TreeNode left = root.left;
+            TreeNode right = root.right;
+            root.left = new TreeNode(v);
+            root.right = new TreeNode(v);
+            root.left.left = left;
+            root.right.right = right;
+        }
+        return root;
+    }
+}
