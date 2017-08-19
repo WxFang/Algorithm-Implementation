@@ -1,0 +1,69 @@
+// recursive
+/*
+Recursively find the node that has the same value as the key, while setting the left/right nodes equal to the returned subtree
+Once the node is found, have to handle the below 4 cases:
+1. node doesn't have left or right - return null
+2. node only has left subtree- return the left subtree
+3. node only has right subtree- return the right subtree
+4. node has both left and right - find the minimum value in the right subtree, set that value to the currently found node, then recursively delete the minimum value in the right subtree
+*/
+
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root == null) return root;
+        if(root.val > key)
+            root.left = deleteNode(root.left, key);
+        else if(root.val < key)
+            root.right = deleteNode(root.right, key);
+        else{
+            if(root.left == null) return root.right;
+            if(root.right == null) return root.left;
+            root.val = findMinVal(root.right);
+            root.right = deleteNode(root.right, root.val);
+        }
+        return root;
+    }
+    private int findMinVal(TreeNode root){
+        while(root.left != null)
+            root = root.left;
+        return root.val;
+    }
+}
+
+
+// straightforward
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if(root == null) return root;
+        
+        TreeNode prev = null;
+        TreeNode cur = root;
+        
+        // find cur node and prev node
+        while(cur != null && cur.val != key){
+            prev = cur;
+            if(cur.val > key) cur = cur.left;
+            else if(cur.val < key) cur = cur.right;
+        }
+        if(cur == null) return root; // cannot find key
+        
+        TreeNode copy = cur;
+        // make right leaf as cur and attach left leaf to leftmost of right leaf
+        if(cur.right == null) cur = cur.left;
+        else if(cur.left == null) cur = cur.right;
+        else{
+            TreeNode left = cur.left;
+            cur = cur.right;
+            TreeNode right = cur;
+            while(right.left != null)
+                right = right.left;
+            right.left = left;
+        }
+        
+        // attach cur node to prev node
+        if(prev == null) return cur;
+        if(prev.val > copy.val) prev.left = cur;
+        else prev.right = cur;
+        return root;
+    }
+}
