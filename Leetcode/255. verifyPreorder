@@ -1,0 +1,37 @@
+// stack; iterative; fast
+class Solution {
+    public boolean verifyPreorder(int[] preorder) {
+        int low = Integer.MIN_VALUE;
+        Stack<Integer> st = new Stack();
+        for(int p: preorder){
+            if(p < low)
+                return false;
+            while(!st.isEmpty() && p > st.peek())
+                low = st.pop();
+            st.push(p);
+        }
+        return true;
+    }
+}
+
+// divide and conquer; recursive; slow; O(nlogn)
+/*
+Recursively examine every key in the array. 
+For each BST node, its key must be greater than all keys in left subtree and less 
+than keys in right subtree.
+*/
+class Solution {
+    public boolean verifyPreorder(int[] preorder) {
+        return helper(preorder, 0, preorder.length - 1);
+    }
+    private boolean helper(int[] preorder, int start, int end){
+        if(start >= end) return true;
+        int temp = start + 1;
+        while(temp <= end && preorder[temp] < preorder[start])
+            temp++;
+        for(int i = temp + 1; i <= end; i++)
+            if(preorder[i] < preorder[start])
+                return false;
+        return helper(preorder, start + 1, temp - 1) && helper(preorder, temp, end);
+    }
+}
