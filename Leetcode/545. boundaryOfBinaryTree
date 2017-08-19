@@ -1,0 +1,51 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        List<Integer> temp = new ArrayList<>();
+        List<Integer> res = new ArrayList<>();
+        if(root == null) return res;
+        res.add(root.val);
+        if(root.left == null && root.right == null) return res;
+        
+        // left bound
+        TreeNode copy = root.left;
+        while(copy != null){
+            temp.add(copy.val);
+            if(copy.left != null) copy = copy.left;
+            else copy = copy.right;
+        }
+        if(temp.size() > 0) temp.remove(temp.size() - 1); 
+        res.addAll(temp);
+        
+        // leaves
+        temp.clear();
+        helper(temp, root);
+        res.addAll(temp);
+        
+        // right bound
+        temp.clear();
+        copy = root.right;
+        while(copy != null){
+            temp.add(0, copy.val);
+            if(copy.right != null) copy = copy.right;
+            else copy = copy.left;
+        }
+        if(temp.size() > 0) temp.remove(0); 
+        res.addAll(temp);
+        return res;
+    }
+    private void helper(List<Integer> leaves, TreeNode root){
+        if(root == null) return;
+        if(root.left == null && root.right == null) leaves.add(root.val);
+        helper(leaves, root.left);
+        helper(leaves, root.right);
+    }
+}
