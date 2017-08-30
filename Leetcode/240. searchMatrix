@@ -1,0 +1,10 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        for(int[] row: matrix){
+            if(row.length == 0 || row[0] > target || row[row.length - 1] < target) continue;
+            if(Arrays.binarySearch(row, target) >= 0)
+                return true;
+        }
+        return false;
+    }
+}
