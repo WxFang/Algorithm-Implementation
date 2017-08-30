@@ -1,0 +1,15 @@
+public class Solution extends GuessGame {
+    public int guessNumber(int n) {
+        int lo = 1, hi = n;
+        while(lo < hi){
+			// if use (lo + hi) / 2
+			// will cause infinite loop
+            int mi = lo + (hi - lo) / 2;
+            int miVal = guess(mi);
+            if(miVal == 0) return mi;
+            else if(miVal == 1) lo = mi + 1;
+            else hi = mi - 1;
+        }
+        return lo;
+    }
+}
