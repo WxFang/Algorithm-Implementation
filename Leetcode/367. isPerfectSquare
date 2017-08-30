@@ -1,0 +1,30 @@
+// Math
+// Any perfect square comsists of 1 + 3 + 5 + 7...
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        int i = 1;
+        while(num > 0){
+            num -= i;
+            i += 2;
+        }
+        if(num == 0) return true;
+        else return false;
+    }
+}
+
+// Binary Search
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        double n = num;
+        if(num == 1) return true;
+        int hi = num / 2, lo = 0;
+        while(hi >= lo){
+            double mid = lo + (hi - lo) / 2;
+			// mid * mid would cause overflow
+            if(mid == n / mid) return true;
+            else if(mid > n / mid) hi = (int)mid - 1;
+            else lo = (int)mid + 1;
+        }
+        return false;
+    }
+}
