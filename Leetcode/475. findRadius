@@ -1,0 +1,37 @@
+// two points
+class Solution {
+    public int findRadius(int[] houses, int[] heaters) {
+        Arrays.sort(houses);
+        Arrays.sort(heaters);
+        int i = 0, res = 0; 
+        for(int house: houses){
+			// find which one is closer to house: heaters[i] or heaters[i + 1]
+            while(i < heaters.length - 1 && heaters[i + 1] - house < house - heaters[i])
+                i++;
+            res = Math.max(res, Math.abs(house - heaters[i]));
+        }
+        return res;
+    }
+}
+
+// binary search
+class Solution {
+    public int findRadius(int[] houses, int[] heaters) {
+        int res = 0;
+        Arrays.sort(heaters);
+        for(int house: houses){
+            int index = Arrays.binarySearch(heaters, house);
+            if(index < 0){
+				// index of the search key, if it is contained in the array; 
+				// otherwise, (-(insertion point) - 1)
+                index = - (index + 1);
+                int temp = Integer.MAX_VALUE;
+                if(index <= 0) temp = heaters[0] - house;
+                else if(index >= heaters.length) temp = house - heaters[heaters.length - 1];
+                else temp = Math.min(heaters[index] - house, house - heaters[index - 1]);
+                res = Math.max(res, temp);
+            }
+        }
+        return res;
+    }
+}
