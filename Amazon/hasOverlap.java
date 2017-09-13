@@ -9,7 +9,7 @@ class Node {
 	}
 }
 
-public class Solution {
+public class hasOverlap {
 	// A & C is bottom-left, B & D is top-right
 	public static boolean hasOverlap(Node A, Node B, Node C, Node D){
 		
