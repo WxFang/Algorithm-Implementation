@@ -7,7 +7,7 @@ public class windowSum {
 	public static List<Integer> _windowSum(List<Integer> input, int k){
 		
 		List<Integer> res = new ArrayList<>();
-		if(input == null || input.size() == 0 || k <= 0) return res;
+		if(input == null || input.size() == 0 || k <= 0 || k > input.size()) return res;
 		int sum = 0;
 		
 		for(int i = 0; i <= k - 1 && i < input.size(); i++)
