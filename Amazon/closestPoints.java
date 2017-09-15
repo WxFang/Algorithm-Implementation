@@ -1,6 +1,6 @@
 package amazon;
 
-import java.util.PriorityQueue;
+import java.util.*;
 
 class Point 
 {
@@ -20,7 +20,13 @@ public class closestPoints {
 	
 	public static Point[] _closestPoints(Point[] array, final Point origin, int k){
 		Point[] res = new Point[k];
-		PriorityQueue<Point> pq = new PriorityQueue<>((a, b) -> (int)(distance(b, origin) - distance(a, origin)));
+//		PriorityQueue<Point> pq = new PriorityQueue<>((a, b) -> (int)(distance(b, origin) - distance(a, origin)));
+		PriorityQueue<Point> pq = new PriorityQueue<>(new Comparator<Point>(){
+            @Override
+            public int compare(Point a, Point b){
+                return -Double.compare(distance(a, origin), distance(b, origin));
+            }
+        });
 		for(Point point: array){
 			pq.offer(point);
 			if(pq.size() > k) pq.poll();
@@ -29,6 +35,23 @@ public class closestPoints {
 			res[i] = pq.poll();
 		return res;
 	}
+	
+	public static Point[] closestPoint2(Point[] array, final Point origin, int k)
+    {
+        if(k > array.length) return array;
+        Point[] res = new Point[k];
+        Arrays.sort(array, new Comparator<Point>()
+        {
+            @Override
+            public int compare(Point a, Point b)
+            {
+                return Double.compare(distance(a, origin), distance(b, origin));
+            }
+         
+        });
+        for(int i = 0; i < k; i++) res[i] = array[i];
+        return res;
+    }
 	
     public static void main(String[] args)
     {
