@@ -33,6 +33,7 @@ public class Solution{
 
 // followup: large array
 // read column by column each time
+// to make it more convenient, we can rotate it and read line by line
 // if memory is still not enough, then read cube by cude
 // cause each time we actually only need to caulate min(max(dp[r-1][c-1], dp[r][c-1], dp[r+1][c-1]), grid[r][c])
 // and it's like a rolling rectangle

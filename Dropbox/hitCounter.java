@@ -102,3 +102,8 @@ class HitCounter {
         return count;
     }
 }
+
+// multithreading followup
+// 题目本身是不断插入hashtag，让随时统计频率最高的。跟这个题一样，有一个插入函数（类似hit)。我的回答是有
+// 一个线程专门负责插入，其它线程给这个线程发送插入的请求。这样需要加锁的部分就
+// 是发送插入请求这块。
