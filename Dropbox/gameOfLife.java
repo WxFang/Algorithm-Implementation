@@ -79,9 +79,9 @@ public class Solution {
 		step 2: save in disk and read by three lines each time
 			So if machine memory is under 1TB, we can save it in the disk or database. 
 			And we can read three lines at one iteration. 
-			We first save the current state of second line. Like build up a list of live cells to 
+			We first save the current state of middle line. Like build up a list of live cells to 
 			be used in the next iteration.
-			Then calculate the next sate of second line. 
+			Then calculate the next state of middle line and save it to disk. 
 			After that we go to next iteration and use the list saved to update the next line. 
 			In this case, we only need to handle three lines, so memory size would be reduced 
 			to only 10^6 = 1MB
