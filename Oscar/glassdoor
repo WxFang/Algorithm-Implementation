@@ -1,0 +1,23 @@
+Q: Given a collection of meetings (each has a start and end time), see whether if all meetings can be held in the meeting hall (i.e. check whether any meetings have overlapping time slots).
+
+Follow-up: See how many meeting rooms are needed to hold all the meetings if there are indeed overlaps. 
+
+
+reverse a utf-8 string
+
+
+Find all pairs that have a specified difference among a set of n integers. 
+
+
+Given a integer list and a range (min and max), find out if there is a combination of integers that add up to a number within the given range. You can use any integer as many times as you like. You don't have to find out how many such combinations are possible / enumerate all of them. Just return true or false.   
+
+
+You are given a magazine and a ransom note. Write an  algorithm to determine if the magazine contains sufficient characters to cut out and construct the ransom note.
+
+
+Given an input list of words and a string, output every different set of words that you can find in the string from the given words. For example,
+input: word_list = ['dog', 'cats', 'sand', 'cat', 'and'], string = "catsanddog"
+output: [ ['cat', 'sand', 'dog'], ['cats', 'and', 'dog'] ]   
+
+
+Given an integer as a string, convert it to an int without using any casting
