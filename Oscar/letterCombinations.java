@@ -23,6 +23,26 @@ public class Solution {
     }
 }
 
+// bfs
+public class Solution {
+    public List<String> letterCombinations(String digits) {
+        String[] mapping = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        LinkedList<String> res = new LinkedList<String>();
+        if(digits.length()==0) return res;
+        res.add("");
+        for(int i=0; i<digits.length(); i++){
+            int x = digits.charAt(i)-'0';
+            while(res.peek().length()==i){
+                String tmp = res.remove();
+                for(char s: mapping[x].toCharArray())
+                    res.add(tmp+s);
+            }
+        }
+        return res;
+    }
+}
+
+
 // followup question：
 // to check valid words given a set of valid words.   
 Map<String, List<String>> map = new HashMap<>();
